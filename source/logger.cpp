@@ -24,54 +24,20 @@
  *         reasonable ways as different from the original version.
  */
 
-#ifndef LOGGER_HPP
-#define LOGGER_HPP
+#include <logger.h>
 
-#include <stdio.h>
-#include <string>
-
-class Logger
+void Logger::log(const std::string &level, const std::string &format)
 {
-public:
-    static Logger &getInstance(void)
+    buffer += level + format + "\n";
+}
+
+void Logger::flush(void)
+{
+    mFile = fopen(mPath.c_str(), "a");
+    if (mFile != NULL)
     {
-        static Logger mLogger;
-        return mLogger;
+        fprintf(mFile, buffer.c_str());
+        fprintf(stderr, buffer.c_str());
+        fclose(mFile);
     }
-
-    inline static const std::string INFO = "[INFO] ";
-    inline static const std::string DEBUG = "[DEBUG] ";
-    inline static const std::string ERROR = "[ERROR] ";
-    inline static const std::string WARN = "[WARN] ";
-
-    void log(const std::string &level, const std::string &format = {})
-    {
-        buffer += level + format + "\n";
-    }
-
-    void flush(void)
-    {
-        mFile = fopen(mPath.c_str(), "a");
-        if (mFile != NULL)
-        {
-            fprintf(mFile, buffer.c_str());
-            fprintf(stderr, buffer.c_str());
-            fclose(mFile);
-        }
-    }
-
-private:
-    Logger(void) { buffer = ""; }
-    ~Logger(void) {}
-
-    Logger(Logger const &) = delete;
-    void operator=(Logger const &) = delete;
-
-    const std::string mPath = "gradius_sdl2.log";
-
-    FILE *mFile;
-
-    std::string buffer;
-};
-
-#endif
+}

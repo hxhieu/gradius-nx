@@ -4,7 +4,7 @@
 #include <switch.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <logger.hpp>
+#include <logger.h>
 
 void SDLH_LoadImage(SDL_Renderer *renderer, SDL_Texture **texture, char *path)
 {
