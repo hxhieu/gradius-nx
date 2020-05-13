@@ -1,7 +1,34 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <switch.h>
 #include <SDL.h>
+#include <SDL_image.h>
+#include <logger.hpp>
+
+void SDLH_LoadImage(SDL_Renderer *renderer, SDL_Texture **texture, char *path)
+{
+    SDL_Surface *loaded_surface = NULL;
+    loaded_surface = IMG_Load(path);
+
+    if (loaded_surface)
+    {
+        Uint32 colorkey = SDL_MapRGB(loaded_surface->format, 0, 0, 0);
+        SDL_SetColorKey(loaded_surface, SDL_TRUE, colorkey);
+        *texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
+    }
+
+    SDL_FreeSurface(loaded_surface);
+}
+
+void SDLH_DrawImage(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y)
+{
+    SDL_Rect position;
+    position.x = x;
+    position.y = y;
+    SDL_QueryTexture(texture, NULL, NULL, &position.w, &position.h);
+    SDL_RenderCopy(renderer, texture, NULL, &position);
+}
 
 void draw_rects(SDL_Renderer *renderer, int x, int y)
 {
@@ -23,13 +50,16 @@ void draw_rects(SDL_Renderer *renderer, int x, int y)
 
 int main(int argc, char *argv[])
 {
+    romfsInit();
+    Logger::getInstance().log(Logger::DEBUG, "STARTED");
     SDL_Event event;
     SDL_Window *window;
     SDL_Renderer *renderer;
     int done = 0, x = 0, w = 1920, h = 1080;
 
     // mandatory at least on switch, else gfx is not properly closed
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0)
+    {
         SDL_Log("SDL_Init: %s\n", SDL_GetError());
         return -1;
     }
@@ -40,7 +70,8 @@ int main(int argc, char *argv[])
     // 1920 x 1080 @ 32 bpp (SDL_PIXELFORMAT_RGBA8888)
     // 1280 x 720 @ 32 bpp (SDL_PIXELFORMAT_RGBA8888)
     window = SDL_CreateWindow("sdl2_gles2", 0, 0, 1920, 1080, 0);
-    if (!window) {
+    if (!window)
+    {
         SDL_Log("SDL_CreateWindow: %s\n", SDL_GetError());
         SDL_Quit();
         return -1;
@@ -48,74 +79,102 @@ int main(int argc, char *argv[])
 
     // create a renderer (OpenGL ES2)
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!renderer) {
+    if (!renderer)
+    {
         SDL_Log("SDL_CreateRenderer: %s\n", SDL_GetError());
         SDL_Quit();
         return -1;
     }
 
+    SDL_Texture *vic;
+    //SDLH_LoadImage(renderer, &vic, "romfs:/star.png");
+    SDLH_LoadImage(renderer, &vic, "romfs:/vic-viper.png");
+
     // open CONTROLLER_PLAYER_1 and CONTROLLER_PLAYER_2
     // when railed, both joycons are mapped to joystick #0,
     // else joycons are individually mapped to joystick #0, joystick #1, ...
     // https://github.com/devkitPro/SDL/blob/switch-sdl2/src/joystick/switch/SDL_sysjoystick.c#L45
-    for (int i = 0; i < 2; i++) {
-        if (SDL_JoystickOpen(i) == NULL) {
+    for (int i = 0; i < 2; i++)
+    {
+        if (SDL_JoystickOpen(i) == NULL)
+        {
             SDL_Log("SDL_JoystickOpen: %s\n", SDL_GetError());
             SDL_Quit();
             return -1;
         }
     }
 
-    while (!done) {
-        while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_JOYAXISMOTION:
-                    SDL_Log("Joystick %d axis %d value: %d\n",
-                            event.jaxis.which,
-                            event.jaxis.axis, event.jaxis.value);
-                    break;
+    while (!done)
+    {
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_JOYAXISMOTION:
+                SDL_Log("Joystick %d axis %d value: %d\n",
+                        event.jaxis.which,
+                        event.jaxis.axis, event.jaxis.value);
+                break;
 
-                case SDL_JOYBUTTONDOWN:
-                    SDL_Log("Joystick %d button %d down\n",
-                            event.jbutton.which, event.jbutton.button);
-                    // https://github.com/devkitPro/SDL/blob/switch-sdl2/src/joystick/switch/SDL_sysjoystick.c#L52
-                    // seek for joystick #0
-                    if (event.jbutton.which == 0) {
-                        if (event.jbutton.button == 0) {
-                            // (A) button down
-                            if(w == 1920) {
-                                SDL_SetWindowSize(window, 1280, 720);
-                            } else {
-                                SDL_SetWindowSize(window, 1920, 1080);
-                            }
-                        } else if (event.jbutton.button == 10) {
-                            // (+) button down
-                            done = 1;
+            case SDL_JOYBUTTONDOWN:
+                SDL_Log("Joystick %d button %d down\n",
+                        event.jbutton.which, event.jbutton.button);
+                // https://github.com/devkitPro/SDL/blob/switch-sdl2/src/joystick/switch/SDL_sysjoystick.c#L52
+                // seek for joystick #0
+                if (event.jbutton.which == 0)
+                {
+                    if (event.jbutton.button == 0)
+                    {
+                        // (A) button down
+                        if (w == 1920)
+                        {
+                            SDL_SetWindowSize(window, 1280, 720);
+                        }
+                        else
+                        {
+                            SDL_SetWindowSize(window, 1920, 1080);
                         }
                     }
-                    break;
+                    else if (event.jbutton.button == 11)
+                    {
+                        // (-) button down
+                        // Flush the logs
+                        Logger::getInstance().flush();
+                    }
+                    else if (event.jbutton.button == 10)
+                    {
+                        // (+) button down
+                        Logger::getInstance().log(Logger::DEBUG, "QUIT");
+                        Logger::getInstance().flush();
+                        done = 1;
+                    }
+                }
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 66, 66, 66, 255);
         SDL_RenderClear(renderer);
 
-        // fill window bounds
-        SDL_SetRenderDrawColor(renderer, 111, 111, 111, 255);
-        SDL_GetWindowSize(window, &w, &h);
-        SDL_Rect f = {0, 0, w, h};
-        SDL_RenderFillRect(renderer, &f);
+        SDLH_DrawImage(renderer, vic, 400, 400);
 
-        draw_rects(renderer, x, 0);
-        draw_rects(renderer, x, h - 64);
+        // fill window bounds
+        // SDL_SetRenderDrawColor(renderer, 111, 111, 111, 255);
+        // SDL_GetWindowSize(window, &w, &h);
+        // SDL_Rect f = {0, 0, w, h};
+        // SDL_RenderFillRect(renderer, &f);
+
+        //draw_rects(renderer, x, 0);
+        //draw_rects(renderer, x, h - 64);
 
         SDL_RenderPresent(renderer);
 
         x++;
-        if (x > w - 192) {
+        if (x > w - 192)
+        {
             x = 0;
         }
     }
@@ -123,6 +182,7 @@ int main(int argc, char *argv[])
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    romfsExit();
 
     return 0;
 }
