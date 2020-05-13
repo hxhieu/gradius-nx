@@ -1,14 +1,21 @@
 #include <iostream>
 #include <logger.h>
 #include <flat.h>
+#include <switch.h>
 #include <game/GameStateManager.h>
+#include <game/TextureAtlas.h>
 
 int main(int argc, char *argv[])
 {
+    Logger::getInstance().log(Logger::INFO, "init romfs");
+    romfsInit();
+
     Logger::getInstance().log(Logger::INFO, "init engine");
     flat2d::FlatBuilder *flat = new flat2d::FlatBuilder();
     flat->loadSDL("GradiusNX", 60, 1280, 720);
     flat2d::GameEngine *engine = flat->getGameEngine();
+
+    TextureAtlas::getInstance().load(flat->getGameData()->getRenderData()->getRenderer());
 
     GameStateManager *gameState = new GameStateManager();
     gameState->run(flat->getGameData());
@@ -35,6 +42,8 @@ int main(int argc, char *argv[])
     // Final flush
     Logger::getInstance().flush();
     Logger::getInstance().cleanup();
+
+    romfsExit();
 
     delete flat;
 }

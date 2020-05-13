@@ -39,9 +39,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	dist/gradius-sdl2
 BUILD		:=	build
-SOURCES		:=	source source/flat source/game
+SOURCES		:=	source source/flat source/game source/entities
 DATA		:=	data
-INCLUDES	:=	include include/flat include/game
+INCLUDES	:=	include include/flat include/game include/entities
 ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
+CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags` -DDEBUG
 
 ifeq ($(DEBUG), 1)
     CFLAGS += -DDEBUG

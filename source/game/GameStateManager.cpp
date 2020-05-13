@@ -1,6 +1,9 @@
+#include <flat.h>
 #include <logger.h>
 #include <switch.h>
+
 #include <game/GameStateManager.h>
+#include <entities/Player.h>
 
 GameStateManager::GameStateManager()
 {
@@ -43,8 +46,9 @@ bool GameStateManager::handleGame(flat2d::GameData *gameData)
 
 void GameStateManager::loadGame(flat2d::GameData *gameData)
 {
-    // TODO:
-    // flat2d::EntityContainer *container = flat->getGameData()->getEntityContainer();
+    flat2d::EntityContainer *entityContainer = gameData->getEntityContainer();
+    entityContainer->registerObject(new Player(200, 200));
+
     // You can register your objects to the container here. Objects extend the Entity class in flat
 }
 

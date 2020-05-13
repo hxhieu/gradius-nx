@@ -23,4 +23,4 @@ public:
     bool quit();
 };
 
-#endif
+#endif // GAMESTATEMANAGER_H_
