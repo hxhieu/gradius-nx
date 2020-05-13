@@ -1,3 +1,4 @@
 [submodule "lib/flat"]
 	path = lib/flat
-	url = https://github.com/LiquidityC/flat.git
+	url = https://github.com/hxhieu/flat.git
+	branch = chore/disable-mixer
