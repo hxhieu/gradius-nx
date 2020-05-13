@@ -1,0 +1,3 @@
+[submodule "lib/flat"]
+	path = lib/flat
+	url = https://github.com/LiquidityC/flat.git
