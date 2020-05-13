@@ -29,6 +29,9 @@
 
 #include <stdio.h>
 #include <string>
+#ifdef DEBUG
+#include <switch.h>
+#endif
 
 class Logger
 {
@@ -40,15 +43,23 @@ public:
     }
 
     inline static const std::string INFO = "[INFO] ";
-    inline static const std::string DEBUG = "[DEBUG] ";
     inline static const std::string ERROR = "[ERROR] ";
     inline static const std::string WARN = "[WARN] ";
 
     void log(const std::string &level, const std::string &format = {});
     void flush(void);
+    void cleanup(void);
 
 private:
-    Logger(void) { buffer = ""; }
+    Logger(void)
+    {
+        buffer = "";
+
+#ifdef DEBUG
+        socketInitializeDefault();
+        nxlinkStdio();
+#endif
+    }
     ~Logger(void) {}
 
     Logger(Logger const &) = delete;

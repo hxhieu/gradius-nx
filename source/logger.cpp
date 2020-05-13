@@ -25,10 +25,18 @@
  */
 
 #include <logger.h>
+#ifdef DEBUG
+#include <switch.h>
+#endif
 
 void Logger::log(const std::string &level, const std::string &format)
 {
-    buffer += level + format + "\n";
+    std::string msg = level + format + "\n";
+    buffer += msg;
+#ifdef DEBUG
+    // Send msg back via nxlink
+    printf(msg.c_str());
+#endif
 }
 
 void Logger::flush(void)
@@ -40,4 +48,11 @@ void Logger::flush(void)
         fprintf(stderr, buffer.c_str());
         fclose(mFile);
     }
+}
+
+void Logger::cleanup(void)
+{
+#ifdef DEBUG
+    socketExit();
+#endif
 }

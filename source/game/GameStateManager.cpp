@@ -1,9 +1,10 @@
 #include <logger.h>
+#include <switch.h>
 #include <game/GameStateManager.h>
 
 GameStateManager::GameStateManager()
 {
-    Logger::getInstance().log(Logger::DEBUG, "init GameStateManager");
+    Logger::getInstance().log(Logger::INFO, "init GameStateManager");
 }
 
 void GameStateManager::handleEvent(const SDL_Event &event)

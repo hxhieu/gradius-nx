@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    Logger::getInstance().log(Logger::DEBUG, "init engine");
+    Logger::getInstance().log(Logger::INFO, "init engine");
     flat2d::FlatBuilder *flat = new flat2d::FlatBuilder();
     flat->loadSDL("GradiusNX", 60, 1280, 720);
     flat2d::GameEngine *engine = flat->getGameEngine();
@@ -26,14 +26,15 @@ int main(int argc, char *argv[])
         gameState->handleEvent(event);
     };
 
-    Logger::getInstance().log(Logger::DEBUG, "start game loop");
+    Logger::getInstance().log(Logger::INFO, "start game loop");
 
     // stateCallback and handleCallback can be omitted if you don't need them
     engine->run(stateCallback, handleCallback);
 
-    Logger::getInstance().log(Logger::DEBUG, "QUIT");
+    Logger::getInstance().log(Logger::INFO, "QUIT");
     // Final flush
     Logger::getInstance().flush();
+    Logger::getInstance().cleanup();
 
     delete flat;
 }
