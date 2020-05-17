@@ -19,13 +19,14 @@ void GameStateManager::handleEvent(const SDL_Event &event)
         // seek for joystick #0
         if (event.jbutton.which == 0)
         {
-            if (event.jbutton.button == 11)
+            // Looks like libnx has it wrong way round
+            if (event.jbutton.button == HidcfgButtonConfig_Plus)
             {
                 // (-) button down
                 // Manual flush the logs for debugging
                 Logger::getInstance().flush();
             }
-            else if (event.jbutton.button == 10)
+            else if (event.jbutton.button == HidcfgButtonConfig_Minus)
             {
                 // (+) button down, quit the game
                 isQuiting = true;
@@ -41,7 +42,8 @@ void GameStateManager::handleEvent(const SDL_Event &event)
 
 bool GameStateManager::handleGame(flat2d::GameData *gameData)
 {
-    // TODO:
+    // TODO: What to handle here?
+    return true;
 }
 
 void GameStateManager::loadGame(flat2d::GameData *gameData)
@@ -54,7 +56,7 @@ void GameStateManager::loadGame(flat2d::GameData *gameData)
 
 void GameStateManager::loadSplash(flat2d::GameData *gameData)
 {
-    // TODO:
+    // TODO: Splash screen
 }
 
 void GameStateManager::run(flat2d::GameData *gameData)
