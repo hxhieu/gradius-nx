@@ -42,7 +42,7 @@ void GameStateManager::handleEvent(const SDL_Event &event)
 
 bool GameStateManager::handleGame(flat2d::GameData *gameData)
 {
-    // TODO:
+    // TODO: What to handle here?
     return true;
 }
 
@@ -56,7 +56,7 @@ void GameStateManager::loadGame(flat2d::GameData *gameData)
 
 void GameStateManager::loadSplash(flat2d::GameData *gameData)
 {
-    // TODO:
+    // TODO: Splash screen
 }
 
 void GameStateManager::run(flat2d::GameData *gameData)

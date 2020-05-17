@@ -14,6 +14,7 @@ void Player::init(const flat2d::GameData *gameData)
 
 void Player::handle(const SDL_Event &event)
 {
+    // TODO: Seperate movement component?
     // https://github.com/devkitPro/SDL/blob/switch-sdl2/src/joystick/switch/SDL_sysjoystick.c#L52
     switch (event.type)
     {
@@ -41,50 +42,50 @@ void Player::handle(const SDL_Event &event)
             }
             entityProperties.setYvel(value * speed);
         }
-        //Logger::getInstance().log(Logger::INFO, "Axis: " + std::to_string(event.jaxis.axis) + ", Value: " + std::to_string(event.jaxis.value));
         break;
     }
-    case SDL_JOYBUTTONDOWN:
-    {
-        // TODO: Not supporting detach joycons i.e. only use #0 attached joycons
-        if (event.jbutton.which != 0)
-            return;
-        int btn = event.jbutton.button;
-        if (btn == HidcfgButtonConfig_DLeft)
-        {
-            entityProperties.setXvel(getMinJoyValue());
-        }
-        else if (btn == HidcfgButtonConfig_DRight)
-        {
-            entityProperties.setXvel(getMaxJoyValue());
-        }
+        // TODO: Support DPAD
+        // case SDL_JOYBUTTONDOWN:
+        // {
+        //     // TODO: Not supporting detach joycons i.e. only use #0 attached joycons
+        //     if (event.jbutton.which != 0)
+        //         return;
+        //     int btn = event.jbutton.button;
+        //     if (btn == HidcfgButtonConfig_DLeft)
+        //     {
+        //         entityProperties.setXvel(getMinJoyValue());
+        //     }
+        //     else if (btn == HidcfgButtonConfig_DRight)
+        //     {
+        //         entityProperties.setXvel(getMaxJoyValue());
+        //     }
 
-        if (btn == HidcfgButtonConfig_DUp)
-        {
-            entityProperties.setYvel(getMinJoyValue());
-        }
-        else if (btn == HidcfgButtonConfig_DDown)
-        {
-            entityProperties.setYvel(getMaxJoyValue());
-        }
-        break;
-    }
-    case SDL_JOYBUTTONUP:
-    {
-        // TODO: Not supporting detach joycons i.e. only use #0 attached joycons
-        if (event.jbutton.which != 0)
-            return;
-        int btn = event.jbutton.button;
-        if (btn == HidcfgButtonConfig_DLeft || btn == HidcfgButtonConfig_DRight)
-        {
-            entityProperties.setXvel(0);
-        }
-        if (btn == HidcfgButtonConfig_DUp || btn == HidcfgButtonConfig_DDown)
-        {
-            entityProperties.setYvel(0);
-        }
-        break;
-    }
+        //     if (btn == HidcfgButtonConfig_DUp)
+        //     {
+        //         entityProperties.setYvel(getMinJoyValue());
+        //     }
+        //     else if (btn == HidcfgButtonConfig_DDown)
+        //     {
+        //         entityProperties.setYvel(getMaxJoyValue());
+        //     }
+        //     break;
+        // }
+        // case SDL_JOYBUTTONUP:
+        // {
+        //     // TODO: Not supporting detach joycons i.e. only use #0 attached joycons
+        //     if (event.jbutton.which != 0)
+        //         return;
+        //     int btn = event.jbutton.button;
+        //     if (btn == HidcfgButtonConfig_DLeft || btn == HidcfgButtonConfig_DRight)
+        //     {
+        //         entityProperties.setXvel(0);
+        //     }
+        //     if (btn == HidcfgButtonConfig_DUp || btn == HidcfgButtonConfig_DDown)
+        //     {
+        //         entityProperties.setYvel(0);
+        //     }
+        //     break;
+        // }
 
     default:
         break;
