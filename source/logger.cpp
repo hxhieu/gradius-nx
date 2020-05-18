@@ -29,30 +29,32 @@
 #include <switch.h>
 #endif
 
-void Logger::log(const std::string &level, const std::string &format)
+void
+Logger::log(const std::string& level, const std::string& format)
 {
-    std::string msg = level + format + "\n";
-    buffer += msg;
+	std::string msg = level + format + "\n";
+	buffer += msg;
 #ifdef DEBUG
-    // Send msg back via nxlink
-    printf(msg.c_str());
+	// Send msg back via nxlink
+	printf(msg.c_str());
 #endif
 }
 
-void Logger::flush(void)
+void
+Logger::flush(void)
 {
-    mFile = fopen(mPath.c_str(), "a");
-    if (mFile != NULL)
-    {
-        fprintf(mFile, buffer.c_str());
-        fprintf(stderr, buffer.c_str());
-        fclose(mFile);
-    }
+	mFile = fopen(mPath.c_str(), "a");
+	if (mFile != NULL) {
+		fprintf(mFile, buffer.c_str());
+		fprintf(stderr, buffer.c_str());
+		fclose(mFile);
+	}
 }
 
-void Logger::cleanup(void)
+void
+Logger::cleanup(void)
 {
 #ifdef DEBUG
-    socketExit();
+	socketExit();
 #endif
 }

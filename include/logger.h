@@ -35,41 +35,40 @@
 
 class Logger
 {
-public:
-    static Logger &getInstance(void)
-    {
-        static Logger mLogger;
-        return mLogger;
-    }
+  public:
+	static Logger& getInstance(void)
+	{
+		static Logger mLogger;
+		return mLogger;
+	}
 
-    inline static const std::string INFO = "[INFO] ";
-    inline static const std::string ERROR = "[ERROR] ";
-    inline static const std::string WARN = "[WARN] ";
+	inline static const std::string INFO = "[INFO] ";
+	inline static const std::string ERROR = "[ERROR] ";
+	inline static const std::string WARN = "[WARN] ";
 
-    void log(const std::string &level, const std::string &format = {});
-    void flush(void);
-    void cleanup(void);
+	void log(const std::string& level, const std::string& format = {});
+	void flush(void);
+	void cleanup(void);
 
-private:
-    Logger(void)
-    {
-        buffer = "";
+  private:
+	Logger(void)
+	{
+		buffer = "";
 
 #ifdef DEBUG
-        socketInitializeDefault();
-        nxlinkStdio();
+		socketInitializeDefault();
+		nxlinkStdio();
 #endif
-    }
-    ~Logger(void) {}
+	}
+	~Logger(void) {}
 
-    Logger(Logger const &) = delete;
-    void operator=(Logger const &) = delete;
+	Logger(Logger const&) = delete;
+	void operator=(Logger const&) = delete;
 
-    const std::string mPath = "gradius_sdl2.log";
+	const std::string mPath = "gradius_sdl2.log";
 
-    FILE *mFile;
+	FILE* mFile;
 
-    std::string buffer;
+	std::string buffer;
 };
-
 #endif
