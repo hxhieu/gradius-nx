@@ -43,9 +43,9 @@ main(int argc, char* argv[])
 	Logger::getInstance().log(Logger::INFO, "QUIT");
 	// Final flush
 	Logger::getInstance().flush();
-						Logger::getInstance().cleanup();
+	Logger::getInstance().cleanup();
 
 	romfsExit();
 
 	delete flat;
-			}
+}
