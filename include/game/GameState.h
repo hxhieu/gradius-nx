@@ -3,8 +3,8 @@
 
 enum GameState
 {
-    SPLASH,
-    GAME
+	SPLASH,
+	GAME
 };
 
 #endif // GAMESTATE_H_
