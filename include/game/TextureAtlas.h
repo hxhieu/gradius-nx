@@ -13,16 +13,19 @@ namespace gradiusnx {
 	  public:
 		// All animations
 		// NOTE: Frame start from the back to front
-		inline static std::vector<SDL_Rect> PLAYER_IDLE = {
-			{ 128, 0, 64, 64 }
-		};
+		inline static std::vector<SDL_Rect> PLAYER_IDLE = { { 0, 0, 64, 64 } };
 		inline static std::vector<SDL_Rect> PLAYER_ROLL_UP = {
-			{ 192, 0, 64, 64 },
+			{ 128, 0, 64, 64 },
 			{ 64, 0, 64, 64 }
 		};
 		inline static std::vector<SDL_Rect> PLAYER_ROLL_DOWN = {
-			{ 0, 0, 64, 64 },
-			{ 256, 0, 64, 64 }
+			{ 256, 0, 64, 64 },
+			{ 192, 0, 64, 64 }
+		};
+
+		inline static std::vector<SDL_Rect> PROJECTILE_VULCAN_STRAIGHT = {
+			{ 320, 0, 64, 64 },
+			{ 384, 0, 64, 64 }
 		};
 
 		static TextureAtlas& getInstance(void)

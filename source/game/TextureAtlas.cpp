@@ -7,7 +7,7 @@ namespace gradiusnx {
 
 	void TextureAtlas::load(SDL_Renderer* renderer)
 	{
-		std::string texturePath = "romfs:/atlas-1.png";
+		std::string texturePath = "romfs:/spritesheet.png";
 		Logger::getInstance().log(Logger::INFO, "try loading " + texturePath);
 		bool success = texture->loadFromFile(texturePath, renderer);
 		if (!success) {

@@ -8,5 +8,6 @@
     "**/.DS_Store": true,
     // hide submodules
     "lib": true
-  }
+  },
+  "C_Cpp.clang_format_path": "/usr/local/bin/clang-format"
 }

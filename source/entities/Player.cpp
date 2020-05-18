@@ -15,7 +15,10 @@ namespace gradiusnx {
 		addAnimation(
 		  "rollDown",
 		  new flat2d::Animation(TextureAtlas::PLAYER_ROLL_DOWN, 200, true));
-		startAnimation("idle");
+		addAnimation(
+		  "test",
+		  new flat2d::Animation(TextureAtlas::PROJECTILE_VULCAN_STRAIGHT, 200));
+		startAnimation("test");
 	}
 
 	void Player::handle(const SDL_Event& event)
@@ -31,14 +34,16 @@ namespace gradiusnx {
 				if (axis == SDL_CONTROLLER_AXIS_LEFTX) {
 					entityProperties.setXvel(value * speed);
 				} else if (event.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
-					if (value < 0) {
+					if (value < -5) {
 						startAnimation("rollUp");
-					} else if (value > 0) {
+					} else if (value > 5) {
 						startAnimation("rollDown");
 					} else {
 						startAnimation("idle");
 					}
 					entityProperties.setYvel(value * speed);
+					Logger::getInstance().log(Logger::INFO,
+					                          std::to_string(value));
 				}
 				break;
 			}
