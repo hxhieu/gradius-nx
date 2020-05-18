@@ -16,10 +16,10 @@ main(int argc, char* argv[])
 	flat->loadSDL("GradiusNX", 60, 1280, 720);
 	flat2d::GameEngine* engine = flat->getGameEngine();
 
-	TextureAtlas::getInstance().load(
+	gradiusnx::TextureAtlas::getInstance().load(
 	  flat->getGameData()->getRenderData()->getRenderer());
 
-	GameStateManager* gameState = new GameStateManager();
+	gradiusnx::GameStateManager* gameState = new gradiusnx::GameStateManager();
 	gameState->run(flat->getGameData());
 
 	// Create the callback methods

@@ -71,5 +71,4 @@ class Logger
 
 	std::string buffer;
 };
-
 #endif
