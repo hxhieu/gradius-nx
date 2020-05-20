@@ -8,7 +8,7 @@ namespace gradiusnx {
 	class TextureAtlas
 	{
 	  private:
-		flat2d::Texture* texture = new flat2d::Texture();
+		flat2d::Texture* texture = new flat2d::Texture(); // TODO: memory leak
 
 	  public:
 		// All animations

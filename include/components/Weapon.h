@@ -2,17 +2,25 @@
 #define WEAPON_H_
 
 #include <Projectile.h>
+
 namespace gradiusnx {
 	class Weapon
 	{
 	  private:
-		Projectile* projectileSample;
+		Projectile* projectileTemplate;
 		int wave = 1;
 		int spread = 1;
 
 	  public:
-		void useProjectile(Projectile* projectile);
-				std::vector<Projectile>* fire(void);
+		Weapon(Projectile* projectile, int waveCount, int spreadCount)
+		{
+			projectileTemplate = projectile;
+			wave = waveCount;
+			spread = spreadCount;
+		}
+		std::vector<Projectile>* fire(void);
+		void stop(void);
+		~Weapon() { delete projectileTemplate; }
 	};
 }
 

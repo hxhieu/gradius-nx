@@ -8,25 +8,28 @@ namespace gradiusnx {
 	class Projectile : public flat2d::Entity
 	{
 	  private:
-		std::vector<SDL_Rect> spriteClip;
-		std::vector<SDL_Rect> impactClip;
-		std::vector<SDL_Rect> explosionClip;
+		flat2d::Clips spriteClip;
+		flat2d::Clips impactClip;
+		flat2d::Clips explosionClip;
 		float speed = 10;
 
 	  public:
-		Projectile(std::vector<SDL_Rect> sprite,
-		           std::vector<SDL_Rect> impact,
-		           std::vector<SDL_Rect> explosion,
-		           float speed)
+		Projectile(flat2d::Clips* sprite,
+		           float speed,
+		           flat2d::Clips* impact = nullptr,
+		           flat2d::Clips* explosion = nullptr)
 		  : Entity(0, 0, 0, 0)
 		{
-			assert(!sprite.empty());
-			spriteClip = sprite;
-			impactClip = impact;
-			explosionClip = explosion;
+			// Sprite is required
+			assert(!sprite->empty());
+			spriteClip = *sprite;
+			if (impact)
+				impactClip = *impact;
+			if (explosion)
+				explosionClip = *explosion;
 			speed = speed;
-			entityProperties.setWidth(sprite.front().w);
-			entityProperties.setHeight(sprite.front().h);
+			entityProperties.setWidth(spriteClip.front().w);
+			entityProperties.setHeight(spriteClip.front().h);
 			entityProperties.setCollidable(true);
 		};
 		Projectile* clone(void);

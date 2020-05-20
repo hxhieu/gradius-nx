@@ -1,6 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
+#include <Weapon.h>
 #include <flat.h>
 #include <switch.h>
 
@@ -9,8 +10,11 @@ namespace gradiusnx {
 	{
 	  private:
 		float speed = 10;
-		float joystickValFactor =
-		  0.001; // Raw joytick values seem to high to be used
+		// Raw joytick values seem to high to be used
+		float joystickValFactor = 0.001;
+		// Max 3 weapons, for now
+		std::vector<Weapon*> weapons = { nullptr, nullptr, nullptr };
+
 		float getMinJoyValue(void)
 		{
 			return SDL_JOYSTICK_AXIS_MIN * joystickValFactor * speed;
@@ -29,7 +33,13 @@ namespace gradiusnx {
 		}
 		void init(const flat2d::GameData* gameData) override;
 		void handle(const SDL_Event& event) override;
-	};
+		void setWeapon(Weapon* weapon, int index);
 
+		~Player()
+		{
+			// TODO: possible memory leak
+			weapons.clear();
+		}
+	};
 }
 #endif // PLAYER_H_

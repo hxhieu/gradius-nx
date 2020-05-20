@@ -39,9 +39,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	dist/gradius-sdl2
 BUILD		:=	build
-SOURCES		:=	source source/flat source/game source/entities
+SOURCES		:=	source source/flat source/game source/entities source/components
 DATA		:=	data
-INCLUDES	:=	include include/flat include/game include/entities
+INCLUDES	:=	include include/flat include/game include/entities include/components
 ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------

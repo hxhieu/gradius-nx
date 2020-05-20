@@ -1,5 +1,6 @@
-#include <entities/Player.h>
-#include <game/TextureAtlas.h>
+#include <Player.h>
+#include <TextureAtlas.h>
+#include <VulcanCannon.h>
 #include <logger.h>
 
 namespace gradiusnx {
@@ -7,18 +8,32 @@ namespace gradiusnx {
 	{
 		Logger::getInstance().log(Logger::INFO, "init Player");
 		setTexture(TextureAtlas::getInstance().getTex());
+		// TODO: memory leak
 		addAnimation("idle",
 		             new flat2d::Animation(TextureAtlas::PLAYER_IDLE, 200));
+		// TODO: memory leak
 		addAnimation(
 		  "rollUp",
 		  new flat2d::Animation(TextureAtlas::PLAYER_ROLL_UP, 200, true));
+		// TODO: memory leak
 		addAnimation(
 		  "rollDown",
 		  new flat2d::Animation(TextureAtlas::PLAYER_ROLL_DOWN, 200, true));
+		// TODO: memory leak
 		addAnimation(
 		  "test",
 		  new flat2d::Animation(TextureAtlas::PROJECTILE_VULCAN_STRAIGHT, 200));
+		// TODO: memory leak
+		// VulcanCannon vulcan = ;
+		setWeapon(new VulcanCannon(), 0);
 		startAnimation("test");
+	}
+
+	void Player::setWeapon(Weapon* weapon, int index)
+	{
+		if (index < weapons.size()) {
+			weapons[index] = weapon;
+		}
 	}
 
 	void Player::handle(const SDL_Event& event)
@@ -42,55 +57,55 @@ namespace gradiusnx {
 						startAnimation("idle");
 					}
 					entityProperties.setYvel(value * speed);
-					Logger::getInstance().log(Logger::INFO,
-					                          std::to_string(value));
 				}
 				break;
 			}
-				// TODO: Support DPAD
-				// case SDL_JOYBUTTONDOWN:
-				// {
-				//     // TODO: Not supporting detach joycons i.e. only use
-				//     #0 attached joycons if (event.jbutton.which != 0)
-				//         return;
-				//     int btn = event.jbutton.button;
-				//     if (btn == HidcfgButtonConfig_DLeft)
-				//     {
-				//         entityProperties.setXvel(getMinJoyValue());
-				//     }
-				//     else if (btn == HidcfgButtonConfig_DRight)
-				//     {
-				//         entityProperties.setXvel(getMaxJoyValue());
-				//     }
 
-				//     if (btn == HidcfgButtonConfig_DUp)
-				//     {
-				//         entityProperties.setYvel(getMinJoyValue());
-				//     }
-				//     else if (btn == HidcfgButtonConfig_DDown)
-				//     {
-				//         entityProperties.setYvel(getMaxJoyValue());
-				//     }
-				//     break;
+			case SDL_JOYBUTTONDOWN: {
+				// TODO: Not supporting detach joycons i.e. only use #0 attached
+				// joycons
+				if (event.jbutton.which != 0)
+					return;
+				int btn = event.jbutton.button;
+
+				if (btn == HidcfgButtonConfig_Y) {
+					Logger::getInstance().log(Logger::INFO,
+					                          std::to_string(btn));
+					// weapons[0]->fire();
+				}
+
+				// TODO: Support DPAD
+				// if (btn == HidcfgButtonConfig_DLeft) {
+				// 	entityProperties.setXvel(getMinJoyValue());
+				// } else if (btn == HidcfgButtonConfig_DRight) {
+				// 	entityProperties.setXvel(getMaxJoyValue());
 				// }
-				// case SDL_JOYBUTTONUP:
-				// {
-				//     // TODO: Not supporting detach joycons i.e. only use
-				//     #0 attached joycons if (event.jbutton.which != 0)
-				//         return;
-				//     int btn = event.jbutton.button;
-				//     if (btn == HidcfgButtonConfig_DLeft || btn ==
-				//     HidcfgButtonConfig_DRight)
-				//     {
-				//         entityProperties.setXvel(0);
-				//     }
-				//     if (btn == HidcfgButtonConfig_DUp || btn ==
-				//     HidcfgButtonConfig_DDown)
-				//     {
-				//         entityProperties.setYvel(0);
-				//     }
-				//     break;
+
+				// if (btn == HidcfgButtonConfig_DUp) {
+				// 	entityProperties.setYvel(getMinJoyValue());
+				// } else if (btn == HidcfgButtonConfig_DDown) {
+				// 	entityProperties.setYvel(getMaxJoyValue());
 				// }
+				break;
+			}
+			case SDL_JOYBUTTONUP: {
+				// TODO: Not supporting detach joycons i.e. only use # 0
+				// attached joycons
+				if (event.jbutton.which != 0)
+					return;
+				int btn = event.jbutton.button;
+
+				// TODO: Support DPAD
+				// if (btn == HidcfgButtonConfig_DLeft ||
+				//     btn == HidcfgButtonConfig_DRight) {
+				// 	entityProperties.setXvel(0);
+				// }
+				// if (btn == HidcfgButtonConfig_DUp ||
+				//     btn == HidcfgButtonConfig_DDown) {
+				// 	entityProperties.setYvel(0);
+				// }
+				break;
+			}
 
 			default:
 				break;

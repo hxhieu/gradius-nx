@@ -47,7 +47,8 @@ namespace gradiusnx {
 	{
 		flat2d::EntityContainer* entityContainer =
 		  gameData->getEntityContainer();
-		entityContainer->registerObject(new Player(200, 200));
+		entityContainer->registerObject(
+		  new Player(200, 200)); // TODO: memory leak
 
 		// You can register your objects to the container here. Objects
 		// extend the Entity class in flat

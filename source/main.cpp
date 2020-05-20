@@ -12,14 +12,15 @@ main(int argc, char* argv[])
 	romfsInit();
 
 	Logger::getInstance().log(Logger::INFO, "init engine");
-	flat2d::FlatBuilder* flat = new flat2d::FlatBuilder();
+	flat2d::FlatBuilder* flat = new flat2d::FlatBuilder(); // TODO: memory leak
 	flat->loadSDL("GradiusNX", 60, 1280, 720);
 	flat2d::GameEngine* engine = flat->getGameEngine();
 
 	gradiusnx::TextureAtlas::getInstance().load(
 	  flat->getGameData()->getRenderData()->getRenderer());
 
-	gradiusnx::GameStateManager* gameState = new gradiusnx::GameStateManager();
+	gradiusnx::GameStateManager* gameState =
+	  new gradiusnx::GameStateManager(); // TODO: memory leak
 	gameState->run(flat->getGameData());
 
 	// Create the callback methods

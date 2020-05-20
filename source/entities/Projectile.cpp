@@ -3,6 +3,7 @@
 namespace gradiusnx {
 	Projectile* Projectile::clone(void)
 	{
-		return new Projectile(spriteClip, impactClip, explosionClip, speed);
+		// TODO: memory leak
+		return new Projectile(&spriteClip, speed, &impactClip, &explosionClip);
 	}
 }
