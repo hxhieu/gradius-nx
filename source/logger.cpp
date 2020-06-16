@@ -41,6 +41,13 @@ Logger::log(const std::string& level, const std::string& format)
 }
 
 void
+Logger::debug(const std::string& format)
+{
+	// Send msg back via nxlink
+	log(Logger::INFO, format);
+}
+
+void
 Logger::flush(void)
 {
 	mFile = fopen(mPath.c_str(), "a");

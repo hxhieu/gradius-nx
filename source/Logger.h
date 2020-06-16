@@ -47,6 +47,7 @@ class Logger
 	inline static const std::string WARN = "[WARN] ";
 
 	void log(const std::string& level, const std::string& format = {});
+	void debug(const std::string& format = {});
 	void flush(void);
 	void cleanup(void);
 

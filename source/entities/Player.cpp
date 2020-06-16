@@ -20,11 +20,11 @@ namespace gradiusnx {
 		  "rollDown",
 		  new flat2d::Animation(TextureAtlas::PLAYER_ROLL_DOWN, 200, true));
 		// TODO: memory leak
-		setWeapon(new VulcanCannon(gameData), 0);
+		attachWeapon(new VulcanCannon(gameData), 0);
 		startAnimation("idle");
 	}
 
-	void Player::setWeapon(Weapon* weapon, int index)
+	void Player::attachWeapon(Weapon* weapon, int index)
 	{
 		if (index < weapons.size()) {
 			weapons[index] = weapon;
@@ -64,7 +64,7 @@ namespace gradiusnx {
 				int btn = event.jbutton.button;
 
 				if (btn == HidcfgButtonConfig_Y) {
-					weapons[0]->fire();
+					weapons[0]->fire(getCentreX(), getCentreY());
 				}
 
 				// TODO: Support DPAD

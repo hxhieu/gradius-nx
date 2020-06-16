@@ -13,18 +13,16 @@ namespace gradiusnx {
 		int wave = 1;
 		int spread = 1;
 		const flat2d::GameData* gameData;
-
-	  protected:
 		void spawnProjectiles(const std::vector<Projectile*> projectiles)
 		{
 			flat2d::EntityContainer* entityContainer =
 			  gameData->getEntityContainer();
 			for (auto& proj : projectiles) {
-				Logger::getInstance().log(Logger::INFO, proj->name);
 				entityContainer->registerObject(proj);
 			}
 		}
 
+	  protected:
 	  public:
 		Weapon(Projectile* projectile,
 		       int waveCount,
@@ -36,7 +34,7 @@ namespace gradiusnx {
 			spread = spreadCount;
 			gameData = gd;
 		}
-		std::vector<Projectile*> fire(void);
+		std::vector<Projectile*> fire(int x, int y);
 		void stop(void);
 		~Weapon() { delete projectileTemplate; }
 	};

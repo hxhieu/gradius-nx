@@ -7,8 +7,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     // hide submodules
-    "lib": true,
-    "include": true
+    "lib": true
   },
   "C_Cpp.clang_format_path": "/usr/local/bin/clang-format",
   "files.associations": {
@@ -20,6 +19,8 @@
     "random": "cpp",
     "vector": "cpp",
     "iosfwd": "cpp",
-    "iterator": "cpp"
-  }
+    "iterator": "cpp",
+    "__debug": "cpp",
+    "unordered_map": "cpp"
+}
 }
