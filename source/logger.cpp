@@ -24,7 +24,7 @@
  *         reasonable ways as different from the original version.
  */
 
-#include <logger.h>
+#include <Logger.h>
 #ifdef DEBUG
 #include <switch.h>
 #endif

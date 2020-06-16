@@ -7,10 +7,11 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     // hide submodules
-    "lib": true
+    "lib": true,
+    "include": true
   },
-"C_Cpp.clang_format_path": "/usr/local/bin/clang-format",
-"files.associations": {
+  "C_Cpp.clang_format_path": "/usr/local/bin/clang-format",
+  "files.associations": {
     "ios": "cpp",
     "istream": "cpp",
     "locale": "cpp",
@@ -20,5 +21,5 @@
     "vector": "cpp",
     "iosfwd": "cpp",
     "iterator": "cpp"
-}
+  }
 }

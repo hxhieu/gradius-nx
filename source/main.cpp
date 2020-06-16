@@ -1,8 +1,8 @@
+#include <Logger.h>
 #include <flat.h>
 #include <game/GameStateManager.h>
 #include <game/TextureAtlas.h>
 #include <iostream>
-#include <logger.h>
 #include <switch.h>
 
 int

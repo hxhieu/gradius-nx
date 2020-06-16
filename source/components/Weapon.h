@@ -1,9 +1,9 @@
 #ifndef WEAPON_H_
 #define WEAPON_H_
 
+#include <Logger.h>
 #include <Projectile.h>
 #include <flat.h>
-#include <logger.h>
 
 namespace gradiusnx {
 	class Weapon

@@ -1,7 +1,7 @@
+#include <Logger.h>
 #include <Player.h>
 #include <TextureAtlas.h>
 #include <VulcanCannon.h>
-#include <logger.h>
 
 namespace gradiusnx {
 	void Player::init(const flat2d::GameData* gameData)

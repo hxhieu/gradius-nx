@@ -1,6 +1,6 @@
+#include <Logger.h>
 #include <flat.h>
 #include <game/TextureAtlas.h>
-#include <logger.h>
 
 namespace gradiusnx {
 	flat2d::Texture* TextureAtlas::getTex(void) { return texture; }

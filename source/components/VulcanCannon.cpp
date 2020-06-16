@@ -1,5 +1,5 @@
+#include <Logger.h>
 #include <VulcanCannon.h>
-#include <logger.h>
 
 namespace gradiusnx {
 	std::vector<Projectile*> Weapon::fire(void)

@@ -1,5 +1,5 @@
+#include <Logger.h>
 #include <flat.h>
-#include <logger.h>
 #include <switch.h>
 
 #include <entities/Player.h>

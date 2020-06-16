@@ -37,11 +37,11 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-TARGET		:=	dist/gradius-sdl2
+TARGET		:=	dist/gradius-nx
 BUILD		:=	build
 SOURCES		:=	source source/flat source/game source/entities source/components
 DATA		:=	data
-INCLUDES	:=	include include/flat include/wink/detail include/wink include/game include/entities include/components
+INCLUDES	:=	include include/flat include/wink/detail include/wink source source/game source/entities source/components
 ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
