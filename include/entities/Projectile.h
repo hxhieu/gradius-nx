@@ -1,6 +1,7 @@
 #ifndef PROJECTILE_H_
 #define PROJECTILE_H_
 
+#include <TextureAtlas.h>
 #include <cassert>
 #include <flat.h>
 
@@ -23,16 +24,27 @@ namespace gradiusnx {
 			// Sprite is required
 			assert(!sprite->empty());
 			spriteClip = *sprite;
-			if (impact)
+			setTexture(TextureAtlas::getInstance().getTex());
+			// TODO: memory leak
+			addAnimation("idle", new flat2d::Animation(*sprite, 200));
+			if (impact) {
 				impactClip = *impact;
-			if (explosion)
+				addAnimation("impact", new flat2d::Animation(*impact, 200));
+			}
+			if (explosion) {
 				explosionClip = *explosion;
+				addAnimation("explosion",
+				             new flat2d::Animation(*explosion, 200));
+			}
 			speed = speed;
-			entityProperties.setWidth(spriteClip.front().w);
-			entityProperties.setHeight(spriteClip.front().h);
+			entityProperties.setWidth(sprite->front().w);
+			entityProperties.setHeight(sprite->front().h);
 			entityProperties.setCollidable(true);
+
+			startAnimation("idle");
 		};
 		Projectile* clone(void);
+		std::string name;
 	};
 }
 #endif // PROJECTILE_H_

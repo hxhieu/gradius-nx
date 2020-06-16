@@ -9,12 +9,13 @@ namespace gradiusnx {
 	{
 	  private:
 	  public:
-		VulcanCannon(void)
+		VulcanCannon(const flat2d::GameData* gameData)
 		  : Weapon(new Projectile(
 		             &TextureAtlas::getInstance().PROJECTILE_VULCAN_STRAIGHT,
 		             20),
 		           2,
-		           1)
+		           1,
+		           gameData)
 		{}
 	};
 }

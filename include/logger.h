@@ -24,8 +24,8 @@
  *         reasonable ways as different from the original version.
  */
 
-#ifndef LOGGER_HPP
-#define LOGGER_HPP
+#ifndef LOGGER_H_
+#define LOGGER_H_
 
 #include <stdio.h>
 #include <string>

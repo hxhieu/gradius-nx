@@ -4,3 +4,6 @@ dist
 include/flat
 !/include/flat/flat.h
 source/flat
+include/wink
+
+!/**/.gitkeep

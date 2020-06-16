@@ -2,3 +2,6 @@
 	path = lib/flat
 	url = https://github.com/hxhieu/flat.git
 	branch = chore/disable-mixer
+[submodule "lib/wink-signals"]
+	path = lib/wink-signals
+	url = https://github.com/hxhieu/Wink-Signals
